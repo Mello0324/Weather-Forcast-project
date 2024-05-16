@@ -52,6 +52,12 @@ function handleSearchSubmit(event) {
 
  searchCity(searchInput.value);
 }
+
+function getForecast(city) {
+  let apiKey = "8db2acdt108befcaed4d3o9902ea6bf1";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query={query}=${city}&key=${apiKey}&units=metric`;
+  console.log(apiUrl);
+}
  
 function displayForecast() {
   let days = ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed"];
@@ -66,7 +72,7 @@ function displayForecast() {
     <div class = "weather-forecast-icon">🌦</div>
     <div class="weather-forecast-temperatures">
     <div class="weather-forecast-temperature">
-     <strong>15°C</strong>
+     <strong>15C°</strong>
      </div>
      <div class="weather-forecast-temperature">8°C</div>
      </div>
@@ -84,3 +90,4 @@ searchFormElement.addEventListener("submit", handleSearchSubmit)
 
 
 displayForecast();
+getForecast(Maseru);
