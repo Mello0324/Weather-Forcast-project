@@ -17,6 +17,7 @@ function refreshWeather(response) {
     windSpeedElemet.innerHTML = `${response.data.wind.speed}km/h`;
     temperatureElement.innerHTML = Math.round(temperature);
      
+    getForecast(response.data.city);
 }
   function formatDate(date) {
     let minutes = date.getMinutes();
@@ -60,7 +61,7 @@ function getForecast(city) {
 }
  
 function displayForecast(response) {
-  console.log(response.data);
+  console.log(response);
 
   let days = ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed"];
   let forecastHtml = "";
@@ -74,9 +75,9 @@ function displayForecast(response) {
     <div class = "weather-forecast-icon">🌦</div>
     <div class="weather-forecast-temperatures">
     <div class="weather-forecast-temperature">
-     <strong>15C°</strong>
+     <strong>${Math.round(day.temperature)}°</strong>
      </div>
-     <div class="weather-forecast-temperature">8°C</div>
+     <div class="weather-forecast-temperature">${Math.round(day.temperature)}°</div>
      </div>
      </div>
     `; 
@@ -92,4 +93,3 @@ searchFormElement.addEventListener("submit", handleSearchSubmit)
 
 
 displayForecast();
-getForecast(Maseru);
