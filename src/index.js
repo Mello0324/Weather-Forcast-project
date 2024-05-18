@@ -66,7 +66,7 @@ function displayForecast(response) {
   let days = ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed"];
   let forecastHtml = "";
 
-  days.forEach(function (day) {
+  response(function (day) {
     forecastHtml =
       forecastHtml +
     `
@@ -93,3 +93,4 @@ searchFormElement.addEventListener("submit", handleSearchSubmit)
 
 
 displayForecast();
+getForecast("Maseru");
