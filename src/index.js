@@ -54,43 +54,50 @@ function handleSearchSubmit(event) {
  searchCity(searchInput.value);
 }
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat",];
+  
+  return days[date.getDay()];
+}
+
 function getForecast(city) {
   let apiKey = "8db2acdt108befcaed4d3o9902ea6bf1";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecastt?query={query}=${city}&key=${apiKey}&units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query={query}=${city}&key=${apiKey}&units=metric`;
   axios(apiUrl).then(displayForecast);
 }
  
 function displayForecast(response) {
-  console.log(response);
-
-  let days = ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed"];
   let forecastHtml = "";
 
-  response(function (day) {
-    forecastHtml =
-      forecastHtml +
+response.data.daily.forEach(function(day, index) {
+
+
+  if (index < 5) {
+
+    forecastHtml +=
     `
     <div class= "weather-forecast-day">
-    <div class = "weather-forecast-date">${day}</div>
-    <div class = "weather-forecast-icon">🌦</div>
+    <div class = "weather-forecast-date">${formatDay(day.time)}</div>
+
+
+    <div><img src="${day.condition.icon_url}" class="icon-in-column" /></div>
     <div class="weather-forecast-temperatures">
     <div class="weather-forecast-temperature">
-     <strong>${Math.round(day.temperature)}°</strong>
+     <strong>${Math.round(day.temp.max)}°</strong>
      </div>
-     <div class="weather-forecast-temperature">${Math.round(day.temperature)}°</div>
+     <div class="weather-forecast-temperature">${Math.round(day.temp.min)}°</div>
      </div>
      </div>
     `; 
+  }
   });
 
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHtml;
-  
 }
 
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit)
 
-
-displayForecast();
-getForecast("Maseru");
+searchCity("Maseru");
